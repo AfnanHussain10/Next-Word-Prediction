@@ -29,6 +29,13 @@ col_name = ["Sentences"]
 df_filtered = pd.DataFrame(filtered_sentences,columns=col_name)
 df_filtered = df_filtered[df_filtered["Sentences"]!="Sentences"]
 
+def MakeTokenizer():
+    sentences = df_filtered['Sentences'].tolist()
+    # Tokenize the sentences
+    tokenizer = Tokenizer()
+    tokenizer.fit_on_texts(sentences)
+    return tokenizer
+
 sentences = df_filtered['Sentences'].tolist()
 words = [word_tokenize(sentence) for sentence in sentences]
 words_without_stopwords = []
@@ -91,9 +98,7 @@ custom_optimizer = Adam(clipvalue=0.5)  # Adjust parameters accordingly
 # Compile the model with the loaded custom optimizer
 model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
 
-# Load the Tokenizer used during training
-with open('tokenizer.pkl', 'rb') as tokenizer_file:
-    tokenizer = pickle.load(tokenizer_file)
+tokenizer = MakeTokenizer()
 
 # Function to predict the next word
 def predict_next_word(input_words, loaded_filtered_model, tokenizer, max_sequence_length):
