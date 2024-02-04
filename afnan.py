@@ -11,7 +11,8 @@ from nltk.tokenize import word_tokenize
 import pandas as pd
 import pickle
 import numpy as np
-
+import nltk
+nltk.download('punkt')
 
 import csv
 
