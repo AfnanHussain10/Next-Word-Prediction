@@ -82,12 +82,12 @@ def show_bar_chart():
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
 
-    st.subheader("Distribution of Word Lengths in Filtered Sentences")
-    plt.figure(figsize=(8, 6))
-    fig = plt.hist(word_lengths, bins=25, edgecolor='black', linewidth=1, alpha=0.7)
-    plt.xlabel('Word Length')
-    plt.ylabel('Frequency')
-    st.pyplot(fig)
+    # Create histogram using px.histogram
+    fig = px.histogram(x=word_lengths, nbins=25, title='Distribution of Word Lengths in Filtered Sentences',
+                       labels={'x': 'Word Length', 'y': 'Frequency'})
+    
+    # Display histogram using st.plotly_chart
+    st.plotly_chart(fig)
 
 
 model = load_model('./my_model.h5', compile=False)
