@@ -150,10 +150,28 @@ def next_word_input_page():
         predicted_words = predict_next_word(user_input, model, tokenizer, 724)
         placeholder.text(f"Predicted Next Words: {', '.join(predicted_words)}")
 
+
+def load_dataset():
+    st.subheader("Displaying Dataset:")
+    st.write(df_filtered)
+
+def home_page():
+    st.title("Welcome to Next Word Prediction Project")
+    st.write(
+        "This project utilizes LSTM to predict the next word in a given sentence. "
+        "The model is trained on a dataset, and it suggests the most probable next words based on the input."
+    )
+    st.write("Navigate using the menu bar on the left.")
+
+    # Button to load and display the dataset
+    if st.button("Show Dataset"):
+        load_dataset()
+
 def main():
     st.set_page_config(page_title="Next Word Prediction App", page_icon="✨")
     st.sidebar.title("Navigation")
-    pages = {"Home": home_page, "Visualizations": visualization_page, "Next Word Input": next_word_input_page}
+
+    pages = {"Home": home_page, "Visualizations": visualization_page}
     page = st.sidebar.radio("Go to", tuple(pages.keys()))
     pages[page]()
 
