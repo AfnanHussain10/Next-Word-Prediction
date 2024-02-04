@@ -83,15 +83,13 @@ def show_histogram():
     st.pyplot()
 
 
-class CustomAdamOptimizer(Adam):
-    def __init__(self, clipvalue=0.5, **kwargs):
-        super(CustomAdamOptimizer, self).__init__(clipvalue=clipvalue, **kwargs)
+model = load_model('./my_model.h5', compile=False)
 
-# Define a dictionary of custom objects with the custom optimizer class
-custom_object = {'CustomAdamOptimizer': CustomAdamOptimizer}
+# Manually load the custom optimizer
+custom_optimizer = Adam(clipvalue=0.5)  # Adjust parameters accordingly
 
-# Load the model with the custom objects
-model = load_model('./my_model.h5', custom_objects=custom_object)
+# Compile the model with the loaded custom optimizer
+model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
 
 # Load the Tokenizer used during training
 with open('tokenizer.pkl', 'rb') as tokenizer_file:
