@@ -84,10 +84,10 @@ def show_histogram():
 
     st.subheader("Distribution of Word Lengths in Filtered Sentences")
     plt.figure(figsize=(8, 6))
-    plt.hist(word_lengths, bins=25, edgecolor='black', linewidth=1, alpha=0.7)
+    fig = plt.hist(word_lengths, bins=25, edgecolor='black', linewidth=1, alpha=0.7)
     plt.xlabel('Word Length')
     plt.ylabel('Frequency')
-    st.pyplot()
+    st.pyplot(fig)
 
 
 model = load_model('./my_model.h5', compile=False)
