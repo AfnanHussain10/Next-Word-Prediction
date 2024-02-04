@@ -1,4 +1,7 @@
-pip install tensorflow
+import subprocess
+
+# Install TensorFlow using pip
+subprocess.run(['pip', 'install', 'tensorflow'])
 import streamlit as st
 from tensorflow.keras.models import load_model
 from keras.preprocessing.text import Tokenizer
