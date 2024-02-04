@@ -29,12 +29,20 @@ col_name = ["Sentences"]
 df_filtered = pd.DataFrame(filtered_sentences,columns=col_name)
 df_filtered = df_filtered[df_filtered["Sentences"]!="Sentences"]
 
-def MakeTokenizer():
+# Load the model once outside the functions
+model = load_model('./my_model.h5', compile=False)
+custom_optimizer = Adam(clipvalue=0.5)
+model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
+
+# Use Streamlit caching for computationally expensive functions
+@st.cache
+def make_tokenizer():
     sentences = df_filtered['Sentences'].tolist()
-    # Tokenize the sentences
     tokenizer = Tokenizer()
     tokenizer.fit_on_texts(sentences)
     return tokenizer
+
+@st.cache
 
 sentences = df_filtered['Sentences'].tolist()
 words = [word_tokenize(sentence) for sentence in sentences]
@@ -90,13 +98,6 @@ def show_histogram():
     st.plotly_chart(fig)
 
 
-model = load_model('./my_model.h5', compile=False)
-
-# Manually load the custom optimizer
-custom_optimizer = Adam(clipvalue=0.5)  # Adjust parameters accordingly
-
-# Compile the model with the loaded custom optimizer
-model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
 
 tokenizer = MakeTokenizer()
 
@@ -139,16 +140,7 @@ def visualization_page():
 
 def next_word_input_page():
     st.title("Next Word Prediction App")
-    placeholder = st.empty()
-
-    # Input text box
-    user_input = st.text_input("Enter a sentence:", "")
-
-    # Predict and display top words dynamically
-    if user_input:
-        max_sequence_length = 3  # Assuming trigrams
-        predicted_words = predict_next_word(user_input, model, tokenizer, 724)
-        placeholder.text(f"Predicted Next Words: {', '.join(predicted_words)}")
+    
 
 
 def load_dataset():
@@ -169,11 +161,19 @@ def home_page():
 
 def main():
     st.set_page_config(page_title="Next Word Prediction App", page_icon="✨")
-    st.sidebar.title("Navigation")
+    home_page()
+    st.subheader("Try the model below:")
+    placeholder = st.empty()
 
-    pages = {"Home": home_page, "Visualizations": visualization_page, "Next Word Input": next_word_input_page}
-    page = st.sidebar.radio("Go to", tuple(pages.keys()))
-    pages[page]()
+    # Input text box
+    user_input = st.text_input("Enter a sentence:", "")
+
+    # Predict and display top words dynamically
+    if user_input:
+        predicted_words = predict_next_word(user_input, model, tokenizer, 724)
+        placeholder.text(f"Predicted Next Words: {', '.join(predicted_words)}")
+    visualization_page()
+    
 
 if __name__ == '__main__':
     main()
