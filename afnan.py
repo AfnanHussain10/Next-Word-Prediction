@@ -5,6 +5,7 @@ from keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
+from tensorflow.keras.optimizers import Adam
 import plotly.express as px
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -82,8 +83,15 @@ def show_histogram():
     st.pyplot()
 
 
-# Load your trained model
-model = load_model('./my_model.h5')
+class CustomAdamOptimizer(Adam):
+    def __init__(self, clipvalue=0.5, **kwargs):
+        super(CustomAdamOptimizer, self).__init__(clipvalue=clipvalue, **kwargs)
+
+# Define a dictionary of custom objects with the custom optimizer class
+custom_objects = {'CustomAdamOptimizer': CustomAdamOptimizer}
+
+# Load the model with the custom objects
+model = load_model('./my_model.h5', custom_objects=custom_objects)
 
 # Load the Tokenizer used during training
 with open('tokenizer.pkl', 'rb') as tokenizer_file:
