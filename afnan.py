@@ -88,10 +88,10 @@ class CustomAdamOptimizer(Adam):
         super(CustomAdamOptimizer, self).__init__(clipvalue=clipvalue, **kwargs)
 
 # Define a dictionary of custom objects with the custom optimizer class
-custom_objects = {'CustomAdamOptimizer': CustomAdamOptimizer}
+custom_object = {'CustomAdamOptimizer': CustomAdamOptimizer}
 
 # Load the model with the custom objects
-model = load_model('./my_model.h5', custom_objects=custom_objects)
+model = load_model('./my_model.h5', custom_objects=custom_object)
 
 # Load the Tokenizer used during training
 with open('tokenizer.pkl', 'rb') as tokenizer_file:
