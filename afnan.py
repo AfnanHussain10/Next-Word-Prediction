@@ -83,7 +83,7 @@ def show_histogram():
 
 
 # Load your trained model
-model = load_model('my_model.h5')
+model = load_model('./my_model.h5')
 
 # Load the Tokenizer used during training
 with open('tokenizer.pkl', 'rb') as tokenizer_file:
