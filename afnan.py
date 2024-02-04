@@ -32,7 +32,7 @@ df_filtered = df_filtered[df_filtered["Sentences"]!="Sentences"]
 # Load the model once outside the functions
 model = load_model('./my_model.h5', compile=False)
 custom_optimizer = Adam(clipvalue=0.5)
-model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
+model.compile(optimizer=custom_optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Use Streamlit caching for computationally expensive functions
 @st.cache
@@ -54,7 +54,8 @@ for line in words:
 words_freq = Counter(words_without_stopwords)
 
 def show_wordcloud():
-    wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(words_freq)
+    wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(dict(words_freq))
+
 
     fig = plt.figure(figsize=(10, 8))
     plt.title("Context of Extracted Data")
@@ -97,7 +98,7 @@ def show_histogram():
 
 
 
-tokenizer = MakeTokenizer()
+tokenizer = make_tokenizer()
 
 # Function to predict the next word
 def predict_next_word(input_words, loaded_filtered_model, tokenizer, max_sequence_length):
@@ -170,6 +171,7 @@ def main():
     if user_input:
         predicted_words = predict_next_word(user_input, model, tokenizer, 724)
         placeholder.text(f"Predicted Next Words: {', '.join(predicted_words)}")
+        
     visualization_page()
     
 
