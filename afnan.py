@@ -7,11 +7,13 @@ from wordcloud import WordCloud
 from collections import Counter
 import plotly.express as px
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 import pandas as pd
 import pickle
 import numpy as np
 import nltk
 nltk.download('punkt')
+nltk.download('stopwords')
 import csv
 
 filtered_sentences = []
