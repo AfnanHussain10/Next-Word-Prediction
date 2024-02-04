@@ -171,7 +171,7 @@ def main():
     st.set_page_config(page_title="Next Word Prediction App", page_icon="✨")
     st.sidebar.title("Navigation")
 
-    pages = {"Home": home_page, "Visualizations": visualization_page}
+    pages = {"Home": home_page, "Visualizations": visualization_page, "Next Word Input": next_word_input_page}
     page = st.sidebar.radio("Go to", tuple(pages.keys()))
     pages[page]()
 
