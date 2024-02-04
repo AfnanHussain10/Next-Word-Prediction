@@ -153,7 +153,7 @@ def next_word_input_page():
 
 def load_dataset():
     st.subheader("Displaying Dataset:")
-    st.write(df_filtered)
+    st.dataframe(df_filtered)
 
 def home_page():
     st.title("Welcome to Next Word Prediction Project")
@@ -164,7 +164,7 @@ def home_page():
     st.write("Navigate using the menu bar on the left.")
 
     # Button to load and display the dataset
-    if st.button("Show Dataset"):
+    if st.checkbox("Show Dataset"):
         load_dataset()
 
 def main():
