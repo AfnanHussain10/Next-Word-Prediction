@@ -43,7 +43,6 @@ def make_tokenizer():
     return tokenizer
 
 @st.cache
-
 sentences = df_filtered['Sentences'].tolist()
 words = [word_tokenize(sentence) for sentence in sentences]
 words_without_stopwords = []
@@ -52,7 +51,6 @@ for line in words:
   for word in line:
     if word not in stop_words:
       words_without_stopwords.append(word)
-
 words_freq = Counter(words_without_stopwords)
 
 def show_wordcloud():
