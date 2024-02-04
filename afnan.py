@@ -17,6 +17,8 @@ nltk.download('punkt')
 nltk.download('stopwords')
 import csv
 
+st.set_page_config(page_title="Next Word Prediction App", page_icon="✨")
+
 filtered_sentences = []
 
 with open('PreprocssedData - Sheet1.csv', newline='') as csvfile:
@@ -163,7 +165,6 @@ def home_page():
         load_dataset()
 
 def main():
-    st.set_page_config(page_title="Next Word Prediction App", page_icon="✨")
     home_page()
     st.subheader("Try the model below:")
     placeholder = st.empty()
@@ -175,9 +176,8 @@ def main():
     if user_input:
         predicted_words = predict_next_word(user_input, model, tokenizer, 724)
         placeholder.text(f"Predicted Next Words: {', '.join(predicted_words)}")
-        
+
     visualization_page()
-    
 
 if __name__ == '__main__':
     main()
