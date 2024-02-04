@@ -40,7 +40,7 @@ custom_optimizer = Adam(clipvalue=0.5)  # Adjust parameters accordingly
 model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
 
 # Use Streamlit caching for computationally expensive functions
-@st.cache
+@st.cache(allow_output_mutation=True)
 def make_tokenizer():
     sentences = df_filtered['Sentences'].tolist()
     tokenizer = Tokenizer()
@@ -49,7 +49,7 @@ def make_tokenizer():
 
 tokenizer = make_tokenizer()
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def create_counter():
     sentences = df_filtered['Sentences'].tolist()
     words = [word_tokenize(sentence) for sentence in sentences]
