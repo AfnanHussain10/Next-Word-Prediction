@@ -31,10 +31,13 @@ col_name = ["Sentences"]
 df_filtered = pd.DataFrame(filtered_sentences,columns=col_name)
 df_filtered = df_filtered[df_filtered["Sentences"]!="Sentences"]
 
-# Load the model once outside the functions
 model = load_model('./my_model.h5', compile=False)
-custom_optimizer = Adam(clipvalue=0.5)
-model.compile(optimizer=custom_optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Manually load the custom optimizer
+custom_optimizer = Adam(clipvalue=0.5)  # Adjust parameters accordingly
+
+# Compile the model with the loaded custom optimizer
+model.compile(optimizer=custom_optimizer, loss='your_loss_function', metrics=['accuracy'])
 
 # Use Streamlit caching for computationally expensive functions
 @st.cache
