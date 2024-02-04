@@ -12,8 +12,6 @@ import pandas as pd
 import pickle
 import numpy as np
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
 
 import csv
 
