@@ -47,6 +47,8 @@ def make_tokenizer():
     tokenizer.fit_on_texts(sentences)
     return tokenizer
 
+tokenizer = make_tokenizer()
+
 @st.cache
 def create_counter():
     sentences = df_filtered['Sentences'].tolist()
@@ -105,9 +107,6 @@ def show_histogram():
     # Display histogram using st.plotly_chart
     st.plotly_chart(fig)
 
-
-
-tokenizer = make_tokenizer()
 
 # Function to predict the next word
 def predict_next_word(input_words, loaded_filtered_model, tokenizer, max_sequence_length):
