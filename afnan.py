@@ -6,13 +6,12 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
 import plotly.express as px
-from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import pandas as pd
 import pickle
 import numpy as np
 import nltk
-
+nltk.download('punkt')
 import csv
 
 filtered_sentences = []
