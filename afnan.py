@@ -2,18 +2,14 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
 from tensorflow.keras.optimizers import Adam
-import plotly.express as px
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 import pandas as pd
 import csv
-
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 import nltk
-from datetime import datetime
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -63,21 +59,11 @@ words_freq = create_counter()
 
 def show_wordcloud():
     wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(dict(words_freq))
-
-    fig = plt.figure(figsize=(10, 8))
-    plt.title("Context of Extracted Data")
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    st.pyplot(fig)
+    st.image(wordcloud.to_array(), use_container_width=True)
 
 def show_bar_chart():
     total_stopwords, total_other_words = zip(*[count_words(sentence) for sentence in df_filtered['Sentences']])
-    fig = px.bar(x=['Stopwords', 'Other Words'], y=[sum(total_stopwords), sum(total_other_words)],
-                 title='Total Number of Stopwords and Other Words in All Sentences',
-                 labels={'value': 'Word Count', 'variable': 'Word Type'},
-                 color=['Stopwords', 'Other Words'])
-    fig.update_layout(barmode='group')
-    st.plotly_chart(fig)
+    st.bar_chart({'Stopwords': [sum(total_stopwords)], 'Other Words': [sum(total_other_words)]})
 
 def count_words(sentence):
     words = word_tokenize(sentence)
@@ -87,18 +73,13 @@ def count_words(sentence):
 
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
-    fig = px.histogram(x=word_lengths, nbins=25, title='Distribution of Word Lengths in Filtered Sentences',
-                       labels={'x': 'Word Length', 'y': 'Frequency'})
-    st.plotly_chart(fig)
+    st.histogram(word_lengths, bins=25, title='Distribution of Word Lengths in Filtered Sentences',
+                 labels={'x': 'Word Length', 'y': 'Frequency'})
 
 def show_line_chart():
     top_words = words_freq.most_common(10)  # Display top 10 words
     top_words_df = pd.DataFrame(top_words, columns=['Word', 'Frequency'])
-    top_words_df['Date'] = pd.to_datetime('today').date()
-
-    st.subheader("Top Words Over Time")
-    fig = px.line(top_words_df, x='Date', y='Frequency', color='Word', title='Top Words Over Time')
-    st.plotly_chart(fig)
+    st.line_chart(top_words_df.set_index('Word'))
 
 def show_top_words_table():
     top_words = words_freq.most_common(10)  # Display top 10 words
