@@ -59,7 +59,7 @@ words_freq = create_counter()
 
 def show_wordcloud():
     wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(dict(words_freq))
-    st.image(wordcloud.to_array(), use_container_width=True)
+    st.image(wordcloud.to_array())
 
 def show_bar_chart():
     total_stopwords, total_other_words = zip(*[count_words(sentence) for sentence in df_filtered['Sentences']])
