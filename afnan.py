@@ -73,7 +73,8 @@ def count_words(sentence):
 
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
-    st.bar_chart(word_lengths.value_counts(bins=25, sort=False))
+    st.hist(word_lengths, bins=25, edgecolor='black', linewidth=1.2, alpha=0.7)
+    st.pyplot()
 
 def show_line_chart():
     top_words = words_freq.most_common(10)  # Display top 10 words
@@ -102,7 +103,6 @@ def home_page():
         "This project utilizes LSTM to predict the next word in a given sentence. "
         "The model is trained on a dataset, and it suggests the most probable next words based on the input."
     )
-    st.write("Navigate using the menu bar on the left.")
 
     if st.checkbox("Show Dataset"):
         load_dataset()
