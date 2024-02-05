@@ -75,7 +75,7 @@ def count_words(sentence):
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
 
-    fig = go.Figure(data=[go.Histogram(x=word_lengths, marker_color='#3498db')])
+    fig = go.Figure(data=[go.Histogram(x=word_lengths, nbinsx=25, xbins=dict(start=0, end=100), marker_color='#3498db')])
     fig.update_layout(title='Distribution of Word Lengths in Filtered Sentences',
                       xaxis_title='Word Length', yaxis_title='Frequency')
     
