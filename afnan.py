@@ -3,6 +3,7 @@ from tensorflow.keras.models import load_model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from wordcloud import WordCloud
+import plotly.graph_objects as go
 from collections import Counter
 from tensorflow.keras.optimizers import Adam
 import pandas as pd
@@ -73,8 +74,12 @@ def count_words(sentence):
 
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
-    st.hist(word_lengths, bins=25, edgecolor='black', linewidth=1.2, alpha=0.7)
-    st.pyplot()
+
+    fig = go.Figure(data=[go.Histogram(x=word_lengths, nbinsx=25, marker_color='#3498db')])
+    fig.update_layout(title='Distribution of Word Lengths in Filtered Sentences',
+                      xaxis_title='Word Length', yaxis_title='Frequency')
+    
+    st.plotly_chart(fig)
 
 def show_line_chart():
     top_words = words_freq.most_common(10)  # Display top 10 words
