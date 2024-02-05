@@ -89,7 +89,6 @@ def show_line_chart():
 def show_top_words_table():
     top_words = words_freq.most_common(10)  # Display top 10 words
     top_words_df = pd.DataFrame(top_words, columns=['Word', 'Frequency'])
-    st.subheader("Top Words and Their Frequencies")
     st.table(top_words_df)
 
 def predict_next_word(input_words, loaded_filtered_model, tokenizer, max_sequence_length):
@@ -115,19 +114,19 @@ def home_page():
 def visualization_page():
     st.title("Data Visualizations")
 
-    st.subheader("Wordcloud:")
+    st.subheader("Wordcloud")
     show_wordcloud()
 
-    st.subheader("Bar Chart:")
+    st.subheader("Bar Chart")
     show_bar_chart()
 
-    st.subheader("Histogram:")
+    st.subheader("Histogram")
     show_histogram()
 
-    st.subheader("Line Chart:")
+    st.subheader("Line Chart")
     show_line_chart()
 
-    st.subheader("Top Words Table:")
+    st.subheader("Top Words Table")
     show_top_words_table()
 
 def next_word_input_page():
