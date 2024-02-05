@@ -59,7 +59,7 @@ words_freq = create_counter()
 
 def show_wordcloud():
     wordcloud = WordCloud(width=800, height=400).generate_from_frequencies(dict(words_freq))
-    st.image(wordcloud.to_array())
+    st.image(wordcloud.to_array(), use_container_width=True)
 
 def show_bar_chart():
     total_stopwords, total_other_words = zip(*[count_words(sentence) for sentence in df_filtered['Sentences']])
@@ -73,8 +73,7 @@ def count_words(sentence):
 
 def show_histogram():
     word_lengths = df_filtered['Sentences'].apply(lambda x: len(x.split()))
-    st.histogram(word_lengths, bins=25, title='Distribution of Word Lengths in Filtered Sentences',
-                 labels={'x': 'Word Length', 'y': 'Frequency'})
+    st.bar_chart(word_lengths.value_counts(bins=25, sort=False))
 
 def show_line_chart():
     top_words = words_freq.most_common(10)  # Display top 10 words
